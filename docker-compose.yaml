@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    image: tcc-postgres:15
+    shm_size: 1gb
+    restart: always
+    environment:
+      POSTGRES_USER: tcc
+      POSTGRES_PASSWORD: tcc
+      POSTGRES_DB: tcc_db
+    cap_add:
+      - NET_ADMIN
+    entrypoint: ["/bin/bash", "-c"]
+    command: >
+      "
+        tc qdisc replace dev eth0 root netem delay 10ms;
+        exec docker-entrypoint.sh postgres
+      "
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tcc -d tcc_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgres://tcc:tcc@db:5432/tcc_db
+      DEBUG: "True"
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+volumes:
+  db:
