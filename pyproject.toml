@@ -1,7 +1,7 @@
 [project]
-name = "tcc"
+name = "django-orm-n1-benchmark"
 version = "0.1.0"
-description = "Add your description here"
+description = "Benchmark do problema de N+1 queries no ORM do Django e das estratégias select_related e prefetch_related"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [

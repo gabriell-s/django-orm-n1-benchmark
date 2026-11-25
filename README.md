@@ -1,4 +1,6 @@
-# TCC — Análise de performance de ORM (N+1 queries) com Django REST Framework
+# django-orm-n1-benchmark
+
+Análise de performance de ORM (N+1 queries) com Django REST Framework, desenvolvida como parte de um TCC.
 
 API de um e-commerce simulado, construída com **Django** e **Django REST Framework**, usada para
 medir o impacto do problema de **N+1 queries** e comparar estratégias de otimização do ORM
