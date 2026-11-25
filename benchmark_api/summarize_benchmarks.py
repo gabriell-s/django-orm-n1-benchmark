@@ -82,7 +82,7 @@ def format_table(averages_per_endpoint, metric, metric_label):
     return '\n'.join(lines)
 
 def main():
-    benchmark_dir = Path(__file__).parent / 'benchmark_api'
+    benchmark_dir = Path(__file__).parent / 'resultados_tcc'
     
     if not benchmark_dir.exists():
         print(f"Error: Directory {benchmark_dir} not found")

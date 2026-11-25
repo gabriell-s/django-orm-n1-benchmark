@@ -123,15 +123,22 @@ python manage.py benchmark_api --append              # continua um benchmark int
 Cada execução gera um arquivo `benchmark_api/api_benchmark_XX.csv` com as colunas
 `endpoint, strategy, page_size, time_ms, query_count, status_code, response_bytes, error`.
 
-Para gerar as tabelas com as médias por endpoint (o script lê os CSVs de
-`benchmark_api/benchmark_api/`, então rode o benchmark com
-`--output-dir benchmark_api/benchmark_api`):
+Para gerar as tabelas com as médias por endpoint:
 
 ```bash
 python benchmark_api/summarize_benchmarks.py
 ```
 
-O resultado é salvo em `benchmark_api/benchmark_api_<endpoint>.txt`.
+O script lê os CSVs de `benchmark_api/resultados_tcc/` e salva o resultado em
+`benchmark_api/benchmark_api_<endpoint>.txt`. Para resumir uma execução nova, gere-a com
+`--output-dir benchmark_api/resultados_tcc` (isso substitui os CSVs usados no TCC).
+
+### Resultados utilizados no TCC
+
+Os CSVs das 10 execuções analisadas no trabalho estão em
+[`benchmark_api/resultados_tcc/`](benchmark_api/resultados_tcc/). Executar o benchmark novamente gera
+novos arquivos: a contagem de queries se repete, mas os tempos variam, pois os dados são gerados
+sem semente fixa.
 
 ## Documentação
 
